@@ -1,0 +1,67 @@
+.wrap, .wrap:before, .ring {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  
+  .ring:before, .ring:after, .disc {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -1.5em;
+    padding: 1.5em;
+    border-radius: 50%;
+    background: hsl(0, 0%, calc(var(--j)*100%));
+  }
+  
+  body {
+    display: grid;
+    place-content: center;
+    margin: 0;
+    height: 100vh;
+    background: #333;
+    filter: drop-shadow(2px 2px 5px);
+  }
+  
+  .wrap {
+    --j: calc(1 - var(--i));
+    --ring-r: calc(3em/var(--tan));
+    --edge: calc(2*(var(--ring-r) + 3em));
+    display: grid;
+    overflow: hidden;
+    width: var(--edge);
+    height: var(--edge);
+    mix-blend-mode: multiply;
+  }
+  .wrap:before {
+    background: var(--back) 50%/cover;
+    content: "";
+  }
+  
+  .ring {
+    place-self: center;
+    position: relative;
+    margin: -1.5em;
+    padding: 1.5em;
+    width: 100%;
+    height: 100%;
+    background: hsl(0, 0%, calc(var(--i)*100%));
+    filter: blur(9px) contrast(19);
+    mix-blend-mode: screen;
+  }
+  .ring:before, .ring:after {
+    transform: rotate(0deg) translate(var(--ring-r));
+    animation: rot calc(var(--n)*0.5s) linear infinite;
+    content: "";
+  }
+  .ring:after {
+    animation-delay: calc(-.5*var(--n)*0.5s);
+  }
+  
+  @keyframes rot {
+    to {
+      transform: rotate(1turn) translate(var(--ring-r));
+    }
+  }
+  .disc {
+    transform: rotate(calc(var(--k)*1turn/var(--n))) translate(var(--ring-r));
+  }
